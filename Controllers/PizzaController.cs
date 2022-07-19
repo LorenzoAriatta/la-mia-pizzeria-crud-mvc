@@ -111,7 +111,8 @@ namespace la_mia_pizzeria_static.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: PizzaController/Delete/5
+        // GET: PizzaController/Delete/5.
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             using (PizzaContext db = new PizzaContext())
@@ -132,15 +133,16 @@ namespace la_mia_pizzeria_static.Controllers
         // POST: PizzaController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Pizza toDelete)
+        public ActionResult ConfirmDelete(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(toDelete);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(toDelete);
+            //}
 
             using(PizzaContext db = new PizzaContext())
             {
+                Pizza toDelete = db.Pizza.Where(pizza => pizza.Id == id).FirstOrDefault();
 
                 if(toDelete != null)
                 {
