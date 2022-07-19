@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using la_mia_pizzeria_static.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_static.Database
 {
@@ -7,6 +8,8 @@ namespace la_mia_pizzeria_static.Database
         public DbSet<Pizza> Pizza { get; set; }
 
         public DbSet<Ingrediente> Ingredienti { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
