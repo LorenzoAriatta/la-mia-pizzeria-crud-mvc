@@ -63,45 +63,96 @@ namespace la_mia_pizzeria_static.Controllers
         }
 
         // GET: PizzaController/Edit/5
+        [HttpGet]
         public ActionResult Edit(int id)
         {
-            return View();
+            using(PizzaContext db = new PizzaContext())
+            {
+                Pizza mod = db.Pizza.Where(pizza => pizza.Id == id).FirstOrDefault();
+
+                if(mod == null)
+                {
+                    return NotFound();
+                }
+
+                return View(mod);
+            }
         }
 
         // POST: PizzaController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Pizza pizzaModel)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(pizzaModel);
             }
-            catch
+
+            using(PizzaContext db = new PizzaContext())
             {
-                return View();
+                Pizza mod = db.Pizza.Where(pizza => pizza.Id == id).FirstOrDefault();
+
+                if(mod != null)
+                {
+                    mod.Name = pizzaModel.Name;
+                    mod.Image = pizzaModel.Image;
+                    mod.Description = pizzaModel.Description;
+                    mod.Price = pizzaModel.Price;
+                    mod.ingredients = pizzaModel.ingredients;
+
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
+            return RedirectToAction("Index");
         }
 
         // GET: PizzaController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            using (PizzaContext db = new PizzaContext())
+            {
+                Pizza mod = db.Pizza.Where(pizza => pizza.Id == id).FirstOrDefault();
+
+                if (mod == null)
+                {
+                    return NotFound();
+                }
+
+                //db.Remove(mod);
+                //return RedirectToAction("Index");
+                return View("Delete", mod);
+            }
         }
 
         // POST: PizzaController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Pizza toDelete)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(toDelete);
             }
-            catch
+
+            using(PizzaContext db = new PizzaContext())
             {
-                return View();
+
+                if(toDelete != null)
+                {
+                    db.Pizza.Remove(toDelete);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
+            return RedirectToAction("Index");
         }
     }
 }
