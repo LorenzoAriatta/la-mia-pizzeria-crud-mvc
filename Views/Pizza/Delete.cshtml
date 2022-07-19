@@ -1,0 +1,9 @@
+﻿
+@model Pizza
+
+<h1>Sicuro di voler eliminare la pizza?</h1>
+
+<form asp-controller="Pizza" asp-action="Delete" asp-route-id="@Model.Id" method="post" >
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Confermo!</button>
+</form>
