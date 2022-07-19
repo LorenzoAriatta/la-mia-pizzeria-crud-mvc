@@ -10,7 +10,7 @@ namespace la_mia_pizzeria_static.Models
             string[] words = fieldValue.Split(' ');
 
            
-            if(words.Length < 5 || fieldValue == null)
+            if(words.Length < 2 || fieldValue == null)
             {
                 return new ValidationResult("Il campo deve contenere almeno 5 parole");
             }
