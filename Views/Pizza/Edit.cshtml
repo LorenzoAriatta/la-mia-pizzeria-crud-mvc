@@ -2,34 +2,50 @@
     ViewData["Title"] = "PizzaEdit";
 }
 
-@model Pizza
+@model PizzaCategories
 
-<form asp-controller="Pizza" asp-action="Edit" asp-route-id="@Model.Id" method="post">
+<form asp-controller="Pizza" asp-action="Edit" asp-route-id="@Model.Pizz.Id" method="post">
     @Html.AntiForgeryToken()
     <div class="mb-3">
         <strong>Nome:</strong>
-        <input asp-for="Name" class="d-block w-50" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <input asp-for="@Model.Pizz.Name" class="d-block w-50" />
+        <span asp-validation-for="@Model.Pizz.Name" class="text-danger"></span>
     </div>
     <div class="mb-3">
             <strong>Link IMG:</strong>
-            <input asp-for="Image" class="d-block w-50" />
-            <span asp-validation-for="Image" class="text-danger"></span>
+            <input asp-for="@Model.Pizz.Image" class="d-block w-50" />
+            <span asp-validation-for="@Model.Pizz.Image" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <strong>Prezzo:</strong>
-            <input asp-for="Price" class="d-block w-50" />
-            <span asp-validation-for="Price" class="text-danger"></span>
+            <input asp-for="@Model.Pizz.Price" class="d-block w-50" />
+            <span asp-validation-for="@Model.Pizz.Price" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <strong>Ingredienti:</strong>
-            <input asp-for="ingredients" class="d-block w-50" />
-            <span asp-validation-for="ingredients" class="text-danger"></span>
+            <input asp-for="@Model.Pizz.ingredients" class="d-block w-50" />
+            <span asp-validation-for="@Model.Pizz.ingredients" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <select asp-for="Pizz.CategoryId" class="d-block w-50">
+                <option value="-- Seleziona una categoria --"></option>
+                @foreach(Category category in @Model.Categories)
+                {
+                    @if(Model.Pizz.CategoryId == category.Id)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                }
+            </select>
         </div>
         <div class="mb-3">
             <strong>Description:</strong>
-            <textarea asp-for="Description" class="d-block w-50"></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
+            <textarea asp-for="@Model.Pizz.Description" class="d-block w-50"></textarea>
+            <span asp-validation-for="@Model.Pizz.Description" class="text-danger"></span>
        </div>
 
        <div class="text-start">
