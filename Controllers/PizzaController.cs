@@ -98,18 +98,24 @@ namespace la_mia_pizzeria_static.Controllers
                     return NotFound();
                 }
 
-                return View(mod);
+                PizzaCategories model = new PizzaCategories();
+                List<Category> categories = db.Categories.ToList();
+
+                model.Categories = categories;
+                model.Pizz = mod;
+
+                return View(model);
             }
         }
 
         // POST: PizzaController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Pizza pizzaModel)
+        public ActionResult Edit(int id, PizzaCategories model)
         {
             if (!ModelState.IsValid)
             {
-                return View(pizzaModel);
+                return View(model);
             }
 
             using(PizzaContext db = new PizzaContext())
@@ -118,11 +124,13 @@ namespace la_mia_pizzeria_static.Controllers
 
                 if(mod != null)
                 {
-                    mod.Name = pizzaModel.Name;
-                    mod.Image = pizzaModel.Image;
-                    mod.Description = pizzaModel.Description;
-                    mod.Price = pizzaModel.Price;
-                    mod.ingredients = pizzaModel.ingredients;
+                    mod.Name = model.Pizz.Name;
+                    mod.Image = model.Pizz.Image;
+                    mod.Description = model.Pizz.Description;
+                    mod.Price = model.Pizz.Price;
+                    mod.ingredients = model.Pizz.ingredients;
+
+                    db.Update(mod);
 
                     db.SaveChanges();
                 }
