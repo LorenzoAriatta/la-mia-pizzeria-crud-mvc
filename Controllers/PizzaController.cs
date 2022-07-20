@@ -46,9 +46,11 @@ namespace la_mia_pizzeria_static.Controllers
             using(PizzaContext db = new PizzaContext())
             {
                 List<Category> categories = db.Categories.ToList();
+                //List<Ingrediente> ingredienti = db.Ingredienti.ToList();
 
                 PizzaCategories pizzaModel = new PizzaCategories();
                 pizzaModel.Categories = categories;
+                //pizzaModel.Ingredients = ingredienti;
                 pizzaModel.Pizz = new Pizza();
 
                 return View(pizzaModel);
@@ -129,6 +131,7 @@ namespace la_mia_pizzeria_static.Controllers
                     mod.Description = model.Pizz.Description;
                     mod.Price = model.Pizz.Price;
                     mod.ingredients = model.Pizz.ingredients;
+                    mod.CategoryId = model.Pizz.CategoryId;
 
                     db.Update(mod);
 

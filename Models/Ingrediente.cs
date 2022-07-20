@@ -9,7 +9,7 @@ public class Ingrediente
 
 	public string Name { get; set; }
 
-	public List<Pizza> pizzas { get; set; }
+	public List<Pizza> Pizzas { get; set; }
 	public Ingrediente()
 	{
 	}
