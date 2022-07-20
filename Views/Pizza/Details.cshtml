@@ -14,7 +14,7 @@
             <h4>Descrizione:</h4>
             <h5 class="my-5">Categoria: @Model.Category.Name</h5>
             <h5>Ingredienti:</h5>
-            <ul>
+            <ul class="my-5">
                 @foreach(Ingrediente ingrediente in @Model.ingredients)
                 {
                     <li>
@@ -22,6 +22,7 @@
                     </li>
                 }
             </ul>
+            <h5>Descrizione:</h5>
             <p class="mb-5">@Model.Description</p>
             
             <a class="btn-danger text-decoration-none text-black rounded-pill py-2 px-4 text-white" asp-area="" asp-controller="Pizza" asp-action="Index">Torna alla lista!</a>
