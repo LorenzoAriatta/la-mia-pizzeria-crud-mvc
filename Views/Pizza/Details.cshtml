@@ -11,10 +11,10 @@
     <div class="row">
         <div class="col-6 align-self-center p-5 box-txt">
             <h1 class="text-center text-danger">@Model.Name</h1>
-            <h4>Descrizione:</h4>
-            <h5 class="my-5">Categoria: @Model.Category.Name</h5>
-            <h5>Ingredienti:</h5>
-            <ul class="my-5">
+            <h4 class="mt-5">Categoria:</h4>
+            <p class="mb-5">@Model.Category.Name</p>
+            <h4>Ingredienti:</h4>
+            <ul class="mb-5">
                 @foreach(Ingrediente ingrediente in @Model.ingredients)
                 {
                     <li>
@@ -22,7 +22,7 @@
                     </li>
                 }
             </ul>
-            <h5>Descrizione:</h5>
+            <h4>Descrizione:</h4>
             <p class="mb-5">@Model.Description</p>
             
             <a class="btn-danger text-decoration-none text-black rounded-pill py-2 px-4 text-white" asp-area="" asp-controller="Pizza" asp-action="Index">Torna alla lista!</a>

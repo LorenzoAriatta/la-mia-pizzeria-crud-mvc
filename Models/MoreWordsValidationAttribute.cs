@@ -12,7 +12,7 @@ namespace la_mia_pizzeria_static.Models
            
             if(words.Length < 2 || fieldValue == null)
             {
-                return new ValidationResult("Il campo deve contenere almeno 5 parole");
+                return new ValidationResult("Il campo deve contenere almeno 2 parole");
             }
            
 
