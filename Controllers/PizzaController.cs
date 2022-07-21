@@ -2,6 +2,7 @@
 using la_mia_pizzeria_static.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_static.Controllers
@@ -46,12 +47,20 @@ namespace la_mia_pizzeria_static.Controllers
             using(PizzaContext db = new PizzaContext())
             {
                 List<Category> categories = db.Categories.ToList();
-                //List<Ingrediente> ingredienti = db.Ingredienti.ToList();
-
                 PizzaCategories pizzaModel = new PizzaCategories();
-                pizzaModel.Categories = categories;
-                //pizzaModel.Ingredients = ingredienti;
+
+                pizzaModel.Categories = categories; 
                 pizzaModel.Pizz = new Pizza();
+
+                List<SelectListItem> ingredientsList = new List<SelectListItem>();
+                List<Ingrediente> ingredients = db.Ingredienti.ToList();
+
+                foreach(Ingrediente i in ingredients)
+                {
+                    ingredientsList.Add(new SelectListItem() { Text = i.Name, Value = i.Id.ToString() });
+                }
+
+                pizzaModel.Ingredients = ingredientsList;
 
                 return View(pizzaModel);
             }
@@ -80,7 +89,22 @@ namespace la_mia_pizzeria_static.Controllers
                 newPizza.Price = pizzaModel.Pizz.Price;
                 newPizza.Category = pizzaModel.Pizz.Category;
                 newPizza.CategoryId = pizzaModel.Pizz.CategoryId;
-                db.Pizza.Add(pizzaModel.Pizz);
+                newPizza.ingredients = new List<Ingrediente>();
+
+                if(pizzaModel.SelectedIngredients != null)
+                {
+                    foreach(string selectedIngredientId in pizzaModel.SelectedIngredients)
+                    {
+                        int selectedId = int.Parse(selectedIngredientId);
+
+                        Ingrediente ingrediente = db.Ingredienti.Where(i => i.Id == selectedId).FirstOrDefault();
+
+                        newPizza.ingredients.Add(ingrediente);
+                    }
+                }
+
+                //db.Pizza.Add(pizzaModel.Pizz);
+                db.Pizza.Add(newPizza);
                 db.SaveChanges();
             }
 
